@@ -52,7 +52,7 @@ using OrdinaryDiffEq: ReturnCode.Success
 
     @mtkbuild sys_damp = WithSpringDamper()
 
-    prob = ODEProblem(sys_damp, [D(D(sys.inertia2.phi)) => 0], (0, 10.0))
+    prob = ODEProblem(sys_damp, [D(D(sys_damp.inertia2.phi)) => 0], (0, 10.0))
     sol2 = solve(prob, Rodas4())
     @test SciMLBase.successful_retcode(sol2)
     @test sol2(0:1:10, idxs = sys_damp.inertia2.w).u≈sol1(0:1:10, idxs = sys.inertia2.w).u atol=1e-3
